@@ -6,6 +6,8 @@ const port = 8080
 
 const app: Application = Express()
 
+
+
 const createApp = async () => {
 
   connectToMongoDB()
@@ -15,7 +17,6 @@ const createApp = async () => {
   app.get('/', (req, res) => {
     res.send('Hello Sir!')
   })
-
 
 }
 
