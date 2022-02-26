@@ -1,4 +1,5 @@
 import Express, { Request, Response, Application } from 'express'
+import express from 'express'
 import { connectToMongoDB } from './db'
 import router from './api/routes'
 
@@ -11,6 +12,9 @@ const app: Application = Express()
 const createApp = async () => {
 
   connectToMongoDB()
+
+  app.use(express.json())
+  app.use(express.urlencoded())
 
   app.use(router)
 
