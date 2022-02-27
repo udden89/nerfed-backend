@@ -4,23 +4,26 @@ import createJWTToken from '../../utils/jwt'
 import User from '../model/user/user'
 
 const create = async (req: Request, res: Response) => {
-  const { email, password } = req.body
+  const { username, email, password } = req.body
 
   const user = await User.create({
+    username,
     email,
     password
   })
+  console.log('Created:', user)
 
   res.json({
     user,
     message: "create user successfully"
   })
+
 }
 
 const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body
+  const { username, email, password } = req.body
   const user = await User.findOne({
-    email
+    username
   })
 
   if (!user) {
@@ -42,7 +45,7 @@ const login = async (req: Request, res: Response) => {
   }
 }
 
-module.exports = {
+export = {
   create,
-  login,
+  login
 }
