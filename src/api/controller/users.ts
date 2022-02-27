@@ -1,4 +1,6 @@
 import { Request, Response } from 'express'
+import { comparePassword } from '../../utils/bcrypt'
+import createJWTToken from '../../utils/jwt'
 import User from '../model/user/user'
 
 const create = async (req: Request, res: Response) => {
@@ -24,10 +26,9 @@ const login = async (req: Request, res: Response) => {
   if (!user) {
     throw Error("User not found")
   }
-  if (bcrypt.compareSync(password, user.password)) {
-    const token = jwt.sign({ user }, "yourSecretKey", {
-      expiresIn: "24h"
-    })
+  if (comparePassword(password, user.password)) {
+
+    const token = createJWTToken(user)
 
     res.json({
       user,

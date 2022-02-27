@@ -8,9 +8,9 @@ const setPassword = (password: string) => {
   return bcrypt.hashSync(password, 10)
 }
 
-const compare = (password: string, hashedPassword: string) => {
+const comparePassword = (password: string, hashedPassword: string) => {
   return bcrypt.compareSync(password, hashedPassword)
 }
 
 
-export { setPassword, compare }
+export { setPassword, comparePassword }
