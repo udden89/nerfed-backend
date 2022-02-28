@@ -3,7 +3,7 @@ import { comparePassword } from '../../utils/bcrypt'
 import createJWTToken from '../../utils/jwt'
 import User from '../model/user/user'
 
-const create = async (req: Request, res: Response) => {
+const registerUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body
 
   const user = await User.create({
@@ -46,6 +46,6 @@ const login = async (req: Request, res: Response) => {
 }
 
 export = {
-  create,
+  registerUser,
   login
 }
