@@ -4,11 +4,13 @@ import { IWorkExperience } from "../model/CV/WorkExperienceInterface"
 
 export const cvRoutes = express.Router()
 
+//GET
 cvRoutes.get("/work-experience", async (req: Request, res: Response) => {
   const listOfWorkExperience: Array<IWorkExperience> = await cvController.getAllWorkExperiences()
   res.status(200).json({ listOfWorkExperience })
 })
 
+//POST
 cvRoutes.post("/work-experience", async (req: Request, res: Response) => {
   const workExperience: IWorkExperience = await cvController.addNewWorkExperience(req, res)
   res.status(200).json({ workExperience })
