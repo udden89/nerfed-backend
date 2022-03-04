@@ -4,7 +4,7 @@ import userController from '../controller/user.controller'
 export const userRoutes = express.Router()
 
 
-userRoutes.post("/create", async (req: Request, res: Response) => {
+userRoutes.post("/register", async (req: Request, res: Response) => {
   const data = await userController.registerUser(req, res)
   res.status(200).json(data)
 })

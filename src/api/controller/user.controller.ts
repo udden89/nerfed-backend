@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
 import { comparePassword } from '../../utils/bcrypt'
-import createJWTToken from '../../utils/jwt'
+import { createJWTToken } from '../../utils/jwt'
 import User from '../model/user/user'
+import * as IUser from '../model/user/UserInterfaces'
 
 const registerUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body
@@ -11,7 +12,6 @@ const registerUser = async (req: Request, res: Response) => {
     email,
     password
   })
-  console.log('Created:', user)
 
   res.json({
     user,
@@ -21,23 +21,31 @@ const registerUser = async (req: Request, res: Response) => {
 }
 
 const login = async (req: Request, res: Response) => {
-  const { username, email, password } = req.body
+  const { username, password } = req.body
+  console.log(username, password)
+
   const user = await User.findOne({
     username
   })
 
   if (!user) {
-    throw Error("User not found")
+    res.status(401).json({
+      message: "Unauthenticated"
+    })
   }
   if (comparePassword(password, user.password)) {
 
     const token = createJWTToken(user)
 
-    res.json({
-      user,
-      token,
-      message: "create user successfully"
-    })
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({
+        user,
+        message: "create user successfully"
+      })
   } else {
     res.status(401).json({
       message: "Unauthenticated"

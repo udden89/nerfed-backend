@@ -1,8 +1,11 @@
 import jwt from 'jsonwebtoken'
+import * as dotenv from "dotenv"
+
 import { IUser } from '../api/model/user/UserInterfaces'
 
+dotenv.config()
 
-const createJWTToken = (user: IUser) => {
+export const createJWTToken = (user: IUser) => {
 
   const secretKey = process.env.JWT_KEY as string
 
@@ -13,5 +16,9 @@ const createJWTToken = (user: IUser) => {
   return token
 }
 
-export = createJWTToken
+export const verifyJWTToken = (token: string) => {
+  return jwt.verify(token, process.env.JWT_KEY!)
+}
+
+
 

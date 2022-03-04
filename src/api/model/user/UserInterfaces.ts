@@ -6,3 +6,8 @@ export interface IUser extends Document {
   username: string
   password: string
 }
+
+export interface IUserClient extends Document {
+  email: string
+  username: string
+}
