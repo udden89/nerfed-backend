@@ -1,28 +1,18 @@
 import { Request, Response } from 'express'
-import { comparePassword } from '../../utils/bcrypt'
-import { createJWTToken } from '../../utils/jwt'
+import { comparePassword } from '../service/auth_services/bcrypt'
+import { createJWTToken } from '../../api/service/auth_services/jwt'
 import User from '../model/user/user'
 import * as IUser from '../model/user/UserInterfaces'
+import userService from '../service/user.service'
 
 const registerUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body
-
-  const user = await User.create({
-    username,
-    email,
-    password
-  })
-
-  res.json({
-    user,
-    message: "create user successfully"
-  })
-
+  const user = await userService.registerUser(username, email, password)
+  res.status(200).json({ user })
 }
 
 const login = async (req: Request, res: Response) => {
-  const { username, password } = req.body
-  console.log(username, password)
+  const { username, password, email } = req.body
 
   const user = await User.findOne({
     username

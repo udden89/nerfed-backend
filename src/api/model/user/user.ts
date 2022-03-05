@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { hashPassword as password } from "../../../utils/bcrypt"
+import { hashPassword } from "../../service/auth_services/bcrypt"
 
 var UserSchema = new mongoose.Schema({
   username: {
@@ -24,7 +24,7 @@ UserSchema.pre("save", function (next) {
   // only hash the password if it has been modified (or is new)
   if (!user.isModified('password')) return next()
 
-  user.password = password(user.password)
+  user.password = hashPassword(user.password)
   next()
 
 })
