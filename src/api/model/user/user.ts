@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { hashPassword } from "../../service/auth_services/bcrypt"
+import { hashPassword } from "../../services/auth_services/bcrypt"
 
 var UserSchema = new mongoose.Schema({
   username: {
@@ -15,6 +15,9 @@ var UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  tokens: {
+    type: Array,
   }
 })
 

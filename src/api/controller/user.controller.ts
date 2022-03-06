@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
-import { comparePassword } from '../service/auth_services/bcrypt'
-import { createJWTToken } from '../../api/service/auth_services/jwt'
+import { comparePassword } from '../services/auth_services/bcrypt'
+import { createJWTToken } from '../services/auth_services/jwt'
 import User from '../model/user/user'
 import * as IUser from '../model/user/UserInterfaces'
-import userService from '../service/user.service'
+import userService from '../services/user.service'
 
 const registerUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body

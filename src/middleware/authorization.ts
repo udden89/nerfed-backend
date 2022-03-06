@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { verifyJWTToken } from '../api/service/auth_services/jwt'
+import { verifyJWTToken } from '../api/services/auth_services/jwt'
 
 export const authorization = (req: Request, res: Response, next: NextFunction) => {
   console.log("auth runned, with cookie:", req.cookies.access_token)
