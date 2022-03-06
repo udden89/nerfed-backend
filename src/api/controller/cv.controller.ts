@@ -7,8 +7,6 @@ const addNewWorkExperience = async (req: Request, res: Response) => {
 }
 
 const getAllWorkExperiences = async () => {
-  console.log("getAllWorkExperiences was called")
-
   const workExperienceList = await cvService.getAllWorkExperiences()
   return workExperienceList
 }
