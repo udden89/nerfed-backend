@@ -14,33 +14,22 @@ const registerUser = async (req: Request, res: Response) => {
 const login = async (req: Request, res: Response) => {
   const { username, password, email } = req.body
 
-  const user = await User.findOne({
-    username
-  })
+  const user = await userService.login(username, email, password)
 
   if (!user) {
     res.status(401).json({
       message: "Unauthenticated"
     })
   }
-  if (comparePassword(password, user.password)) {
 
-    const token = createJWTToken(user)
-
-    res
-      .cookie("access_token", token, {
-        httpOnly: true,
-      })
-      .status(200)
-      .json({
-        user,
-        message: "create user successfully"
-      })
-  } else {
-    res.status(401).json({
-      message: "Unauthenticated"
+  res.cookie("access_token", user.tokens, {
+    httpOnly: true,
+  })
+    .status(200)
+    .json({
+      user,
+      message: "Logged in successfully"
     })
-  }
 }
 
 export = {

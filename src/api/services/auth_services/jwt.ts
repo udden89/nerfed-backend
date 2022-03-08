@@ -7,6 +7,7 @@ dotenv.config()
 export const createJWTToken = (user: IUser) => {
 
   const secretKey = process.env.JWT_KEY as string
+
   const token = jwt.sign({ user }, secretKey, {
     expiresIn: "24h"
   })

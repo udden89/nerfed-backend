@@ -5,9 +5,11 @@ export interface IUser extends Document {
   email: string
   username: string
   password: string
+  tokens: Array<String>
 }
 
 export interface IUserClient extends Document {
   email: string
   username: string
+  token: string
 }

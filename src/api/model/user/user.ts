@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import { hashPassword } from "../../services/auth_services/bcrypt"
+import { createJWTToken } from "../../services/auth_services/jwt"
 
 var UserSchema = new mongoose.Schema({
   username: {
@@ -29,7 +30,6 @@ UserSchema.pre("save", function (next) {
 
   user.password = hashPassword(user.password)
   next()
-
 })
 
 export default mongoose.model("User", UserSchema)
