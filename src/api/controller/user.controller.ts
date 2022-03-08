@@ -12,24 +12,24 @@ const registerUser = async (req: Request, res: Response) => {
 }
 
 const login = async (req: Request, res: Response) => {
-  const { username, password, email } = req.body
 
-  const user = await userService.login(username, email, password)
+  try {
+    const { username, password, email } = req.body
+    const user = await userService.login(username, email, password)
 
-  if (!user) {
-    res.status(401).json({
-      message: "Unauthenticated"
+    res.cookie(
+      "access_token",
+      user.tokens[0], {
+      httpOnly: true,
     })
+      .status(200)
+      .json({
+        user,
+        message: "Logged in successfully"
+      })
+  } catch (error) {
+    res.status(400).json()
   }
-
-  res.cookie("access_token", user.tokens, {
-    httpOnly: true,
-  })
-    .status(200)
-    .json({
-      user,
-      message: "Logged in successfully"
-    })
 }
 
 export = {
