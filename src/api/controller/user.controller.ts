@@ -32,7 +32,20 @@ const login = async (req: Request, res: Response) => {
   }
 }
 
+const whoAmI = async (req: Request, res: Response) => {
+  console.log(req.cookies)
+
+  try {
+    const user = await userService.findUserByToken(req.cookies.access_token)
+    console.log("WHOAM I USER: ", user)
+    return await user
+  } catch (error) {
+
+  }
+}
+
 export = {
   registerUser,
-  login
+  login,
+  whoAmI
 }

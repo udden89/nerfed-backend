@@ -18,7 +18,7 @@ var UserSchema = new mongoose.Schema({
     required: true,
   },
   tokens: {
-    type: Array,
+    type: [String],
   }
 })
 

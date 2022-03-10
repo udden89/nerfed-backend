@@ -36,6 +36,13 @@ const findUser = async (username: string, email: string): Promise<IUser> => {
   return user
 }
 
+const findUserByToken = async (token: string) => {
+  const user = await User.findOne({ tokens: token })
+  if (!user) throw new Error("Couldnt find any user")
+
+  return user
+}
+
 const saveUser = async (user: IUser) => {
   await User.updateOne({ _id: user._id }, user)
 }
@@ -44,7 +51,8 @@ export default {
 
   registerUser,
   login,
-  findUser
+  findUser,
+  findUserByToken
 
 }
 
