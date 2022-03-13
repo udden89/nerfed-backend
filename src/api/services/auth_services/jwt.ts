@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import * as dotenv from "dotenv"
-import { IUser } from '../../model/user/UserInterfaces'
+import { IUser } from '../../models_DTOs_interfaces/user/UserInterfaces'
 
 dotenv.config()
 
@@ -16,6 +16,7 @@ export const createJWTToken = (user: IUser) => {
 }
 
 export const verifyJWTToken = (token: string) => {
+  if (!token) return
   return jwt.verify(token, process.env.JWT_KEY!)
 }
 

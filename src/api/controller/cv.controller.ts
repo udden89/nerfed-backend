@@ -6,13 +6,19 @@ const addNewWorkExperience = async (req: Request, res: Response) => {
   return workExperience
 }
 
-const getAllWorkExperiences = async () => {
+const getListOfFullWorkExperiences = async () => {
   const workExperienceList = await cvService.getAllWorkExperiences()
+  return workExperienceList
+}
+
+const getPublicWorkExperiences = async () => {
+  const workExperienceList = await cvService.getPublicWorkExperiences()
   return workExperienceList
 }
 
 
 export default {
   addNewWorkExperience,
-  getAllWorkExperiences
+  getListOfFullWorkExperiences,
+  getPublicWorkExperiences
 }

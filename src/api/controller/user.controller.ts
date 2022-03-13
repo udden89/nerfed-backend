@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import { comparePassword } from '../services/auth_services/bcrypt'
-import { createJWTToken } from '../services/auth_services/jwt'
-import User from '../model/user/user'
-import * as IUser from '../model/user/UserInterfaces'
+import { createJWTToken, verifyJWTToken } from '../services/auth_services/jwt'
+import User from '../models_DTOs_interfaces/user/user'
+import * as IUser from '../models_DTOs_interfaces/user/UserInterfaces'
 import userService from '../services/user.service'
 
 const registerUser = async (req: Request, res: Response) => {
@@ -19,7 +19,7 @@ const login = async (req: Request, res: Response) => {
 
     res.cookie(
       "access_token",
-      user.tokens[0], {
+      createJWTToken(user), {
       httpOnly: true,
     })
       .status(200)
@@ -36,12 +36,23 @@ const whoAmI = async (req: Request, res: Response) => {
   console.log(req.cookies)
 
   try {
-    const user = await userService.findUserByToken(req.cookies.access_token)
+    const user = verifyJWTToken(req.cookies.access_token)
+    return user
+  } catch (error) {
+    console.log(error)
+
+  }
+
+
+
+  /* try {
+
+    const user = await userService.findUser(req.cookies.access_token)
     console.log("WHOAM I USER: ", user)
     return await user
   } catch (error) {
 
-  }
+  } */
 }
 
 export = {
